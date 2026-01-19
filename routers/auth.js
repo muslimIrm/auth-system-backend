@@ -122,12 +122,12 @@ router.post("/login", asyncHandler(async (req, res) => {
 router.post("/logout", verify, asyncHandler(async (req, res) => {
     res.cookie("token", "", {
         httpOnly: true,
-        secure: true,      
-        sameSite: "none",  
+        secure: true,
+        sameSite: "none",
         path: "/",
-        expires: new Date(0) 
+        expires: new Date(0)
     });
-    
+
     res.status(200).json({ message: "Logout success" });
 }));
 
@@ -187,14 +187,16 @@ router.put("/forgot_password", asyncHandler(async (req, res) => {
             <a href=${link}>${link}</a>
         </div>`
     };
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return res.json({ message: "there was wrong" });
-        }
-        return res.json({ message: "If the email exists, a reset link will be sent" })
+    try {
+        await transporter.sendMail(mailOptions);
+    } catch (err) {
+        console.error("Mail error:", err.message);
+    }
 
+    res.json({
+        message: "If the email exists, a reset link will be sent"
 
-    });
+    })
 
 }))
 
