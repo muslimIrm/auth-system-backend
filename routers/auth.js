@@ -187,16 +187,14 @@ router.put("/forgot_password", asyncHandler(async (req, res) => {
             <a href=${link}>${link}</a>
         </div>`
     };
-    try {
-        await transporter.sendMail(mailOptions);
-    } catch (err) {
-        console.error("Mail error:", err.message);
-    }
 
-    res.json({
+    transporter.sendMail(mailOptions)
+        .catch(err => console.error(err.message));
+
+    res.status(200).json({
         message: "If the email exists, a reset link will be sent"
+    });
 
-    })
 
 }))
 
