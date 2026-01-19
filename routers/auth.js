@@ -122,11 +122,14 @@ router.post("/login", asyncHandler(async (req, res) => {
 router.post("/logout", verify, asyncHandler(async (req, res) => {
     res.cookie("token", "", {
         httpOnly: true,
-        expires: new Date(0)
-    })
-    res.json({ message: "Logout success" }).status(200)
-}))
-
+        secure: true,      
+        sameSite: "none",  
+        path: "/",
+        expires: new Date(0) 
+    });
+    
+    res.status(200).json({ message: "Logout success" });
+}));
 
 router.delete("/delete_account", verify, asyncHandler(async (req, res) => {
     const { _id } = req.userData;
