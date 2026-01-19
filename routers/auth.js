@@ -62,7 +62,7 @@ router.post("/register", asyncHandler(async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: true,
-            sameSite: "lax",
+            sameSite: "none",
             path: "/",
             maxAge: 31536000000
         })
@@ -108,7 +108,8 @@ router.post("/login", asyncHandler(async (req, res) => {
     res.cookie("token", token, {
         httpOnly: true,
         secure: true,
-        sameSite: "lax",
+        sameSite: "none",
+
         path: "/",
         maxAge: 31536000000
     })
