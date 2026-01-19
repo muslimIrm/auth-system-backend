@@ -34,7 +34,6 @@ const UserSchema = new mongoose.Schema(
             required: true,
             minlength: 8,
             select: false,
-            match: /^[a-zA-Z0-9_]+$/
 
         }
     },
